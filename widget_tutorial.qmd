@@ -1,0 +1,30 @@
+---
+title: "Trying Out Quarto: Simple Example from Jupyter Widgets Tutorial"
+author: "Edward Chick"
+execute:
+  warning: false
+format: dashboard
+jupyter: python3
+
+---
+```{python}
+
+#### DOESN@T WORK!!! ####
+
+import ipywidgets as widgets
+from IPython.display import display
+from traitlets import HasTraits
+
+slider = widgets.FloatSlider(description='Input:')
+square_display = widgets.HTML(description="Square: ", value='{}'.format(slider.value**2))
+display(widgets.VBox([slider, square_display]))
+output = widgets.Output()
+display(output)
+@output.capture()
+def update_square_display(change):
+    print(change)
+    square_display.value = '{}'.format(change.new**2)
+
+    
+slider.observe(update_square_display, names="value")
+```
